@@ -7,6 +7,10 @@ import random
 
 card_length = 50
 card_height = 100
+true = 1
+false = 0
+face_up = true
+face_down = false
 
 card_list = range (0,8)*2 #[0,1,2,3,4,5,6,7]
 card_expose = range (0,8)*2
@@ -19,7 +23,10 @@ def new_game():
   random.shuffle(card_list) 
   print card_list
   for i in range(0, num_card_list):
-    card_expose[i] = 0
+    if i <= 10:
+        card_expose[i] = 0
+    else:
+        card_expose[i] = 1
   print card_expose
   print num_card_list
   
@@ -33,11 +40,24 @@ def mouseclick(pos):
                         
 # cards are logically 50x100 pixels in size    
 def draw(canvas):
-    global card_list
-    #canvas.draw_text(text, point, font_size, font_color)
+    global card_list, face_down, face_up
+    # canvas.draw_text(text, point, font_size, font_color)
     for i in range(0, num_card_list):
         # print card_list[i]
         canvas.draw_text(str(card_list[i]), (card_length*i+25, card_height/2), 20, 'White')
+
+    # canvas.draw_polygon(point_list, line_width, line_color, fill_color = color)
+    # canvas.draw_polygon([(50, 70), (80, 40), (30, 90)], 5, 'Blue', 'White')
+    for i in range(0, num_card_list):
+        if card_expose[i] == face_down:            
+            canvas.draw_polygon([(card_length*i,0),
+                                 (card_length*(i+1),0),
+                                 (card_length*(i+1),card_height),
+                                 (card_length*i, card_height)],
+                                  5,'white','green')
+       
+            
+            
 
 
 # create frame and add a button and labels
