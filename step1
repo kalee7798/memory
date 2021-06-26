@@ -5,9 +5,19 @@
 import simplegui
 import random
 
+card_list = range (0,8)*2 #[0,1,2,3,4,5,6,7]
+card_expose = range (0,8)*2
+num_card_list = len(card_list)
+
 # helper function to initialize globals
 def new_game():
-    pass  
+  global card_list, num_card_list, card_expose
+  print card_list 
+  for i in range(0, num_card_list):
+    card_expose[i] = 0
+  print card_expose
+  print num_card_list
+  
 
      
 # define event handlers
@@ -36,3 +46,4 @@ frame.start()
 
 
 # Always remember to review the grading rubric
+
