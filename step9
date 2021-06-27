@@ -46,15 +46,16 @@ def mouseclick(pos):
     # add game state logic here
     global card_list, card_expose
     global game_logic, card_list_1_index, card_list_2_index
+    global turns
     
     i = pos[0]/card_length
-    print "++++++++++++++++++++++"
+    print "++++++++ START ++++++++++++++"
     print "mouse click:", pos
     print "mouse click card index:", i
     print "game_logic:", game_logic
     print "card_list_1_index:", card_list_1_index
     print "card_list_2_index:", card_list_2_index
-    print "++++++++++++++++++++++"
+    print "+++++++++++++++++++++++++++++"
     
     # game logic example for the step 7
     # https://py2.codeskulptor.org/#examples-memory_states.py
@@ -62,6 +63,8 @@ def mouseclick(pos):
     if game_logic == game_logic_start:
         game_logic = game_logic_1
         card_list_1_index = i # save the first card index/ position
+        label.set_text("Turns = 0")
+        turns = 0
         
         if card_expose[i] == false:
             card_expose[i] = -card_expose[i]
@@ -77,6 +80,12 @@ def mouseclick(pos):
           
             game_logic = game_logic_2 
             card_list_2_index = i
+            
+            if card_list[card_list_1_index] <> card_list[card_list_2_index]:
+
+                turns += 1
+                label.set_text("Turns = "+str(turns))
+                print "Doesn't match"
             
             print "card_list_1_index/game_logic:", card_list_1_index,"/",game_logic
             print "card_list_2_index/game_logic:", card_list_2_index,"/",game_logic
