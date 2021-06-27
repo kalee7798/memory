@@ -1,5 +1,5 @@
-# Coursera Plus https://www.coursera.org/courseraplus (login with Katherine gmail)
-
+# https://www.coursera.org/courseraplus use Katherine gmail account to login in to Coursera Plus account.
+#
 # https://py2.codeskulptor.org/#user48_NltDFKa7bM_5.py (katherine)
 # https://py2.codeskulptor.org/#user48_ShrqC2sp4n_0.py
 # https://py2.codeskulptor.org/#user48_ZICjxYHhSt_0.py (doris)
@@ -51,45 +51,72 @@ def mouseclick(pos):
     print "++++++++++++++++++++++"
     print "mouse click:", pos
     print "mouse click card index:", i
-    # game logic example for the step 7
-    # https://py2.codeskulptor.org/#examples-memory_states.py
-    
     print "game_logic:", game_logic
     print "card_list_1_index:", card_list_1_index
     print "card_list_2_index:", card_list_2_index
+    print "++++++++++++++++++++++"
     
+    # game logic example for the step 7
+    # https://py2.codeskulptor.org/#examples-memory_states.py
+        
     if game_logic == game_logic_start:
         game_logic = game_logic_1
         card_list_1_index = i # save the first card index/ position
-        print "card_list_1_index/game_logic", card_list_1_index,game_logic
+        
         if card_expose[i] == false:
             card_expose[i] = -card_expose[i]
+            
+            print "card_list_1_index/game_logic:", card_list_1_index,"/",game_logic
+            print "card_list_2_index/game_logic:", card_list_2_index,"/",game_logic
             print card_expose
+            
     elif game_logic == game_logic_1: # one card is exposed
+        
         if card_expose[i] == false:
             card_expose[i] = -card_expose[i]
-            # card_expose[i] == -card_expose[i] # wrong - doesn't cahgne the value of card_expose[i]
+          
             game_logic = game_logic_2 
             card_list_2_index = i
-            print "card_list_2_index/game_logic", card_list_2_index, game_logic
+            
+            print "card_list_1_index/game_logic:", card_list_1_index,"/",game_logic
+            print "card_list_2_index/game_logic:", card_list_2_index,"/",game_logic
             print "card_expose", card_expose
+    
     elif game_logic == game_logic_2:     
         if card_expose[i] == false:
             card_expose[i] = -card_expose[i]
-            print "card_expose/ game_logic", card_expose, game_logic
-            print card_list[card_list_1_index]
-            print card_list[card_list_2_index]
+            
+            print "card_list_1_index/game_logic:", card_list_1_index,"/",game_logic
+            print "card_list_2_index/game_logic:", card_list_2_index,"/",game_logic
+            print "card_expose", card_expose
+            
             if card_list[card_list_1_index] <> card_list[card_list_2_index]:
-                print "ok"
+                
                 game_logic = game_logic_1
                 card_expose[card_list_1_index] = false # make card face down
                 card_expose[card_list_2_index] = false # make card face down
                 card_list_1_index = i
                 card_list_2_index = 0
                 
-        else: 
+                print "Doesn't match"
+                print "card_list_1_index/game_logic:", card_list_1_index,"/",game_logic
+                print "card_list_2_index/game_logic:", card_list_2_index,"/",game_logic
+                print "card_expose", card_expose
+                
+            elif card_list[card_list_1_index] == card_list[card_list_2_index]:
+                game_logic = game_logic_1
+                card_list_1_index = i
+                card_list_2_index = 0
+                
+                print "Match"
+                print "card_list_1_index/game_logic:", card_list_1_index,"/",game_logic
+                print "card_list_2_index/game_logic:", card_list_2_index,"/",game_logic
+                print "card_expose", card_expose
+                 
+        elif card_expose[i] == true:
             print "what is going on?"
-    
+            pass
+           
 # cards are logically 50x100 pixels in size    
 def draw(canvas):
     global card_list, face_down, face_up
