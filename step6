@@ -32,12 +32,14 @@ def new_game():
      
 # define event handlers
 def mouseclick(pos):
+    # global false, card_expose
     # add game state logic here
     print pos
     i = pos[0]/card_length
-    print i
-    card_expose[i] = -card_expose[i]
-                        
+    if card_expose[i] == false:
+        card_expose[i] = -card_expose[i]
+    print card_expose
+    
 # cards are logically 50x100 pixels in size    
 def draw(canvas):
     global card_list, face_down, face_up
