@@ -38,6 +38,10 @@ def new_game():
   print num_card_list
   game_logic = game_logic_start # start new game so logic = 0. 
   
+  turns = 0
+  label.set_text("Turns = "+str(turns))
+  # label.set_text("Turns = 0")
+  
 
      
 # define event handlers
@@ -63,8 +67,11 @@ def mouseclick(pos):
     if game_logic == game_logic_start:
         game_logic = game_logic_1
         card_list_1_index = i # save the first card index/ position
-        label.set_text("Turns = 0")
+        
         turns = 0
+        label.set_text("Turns = "+str(turns))
+        # label.set_text("Turns = 0")
+        
         
         if card_expose[i] == false:
             card_expose[i] = -card_expose[i]
