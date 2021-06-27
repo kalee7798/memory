@@ -1,0 +1,96 @@
+# https://py2.codeskulptor.org/#user48_NltDFKa7bM_5.py (katherine)
+# https://py2.codeskulptor.org/#user48_ShrqC2sp4n_0.py
+# https://py2.codeskulptor.org/#user48_ZICjxYHhSt_0.py (doris)
+# implementation of card game - Memory
+
+import simplegui
+import random
+
+card_length = 50
+card_height = 100
+true = 1
+false = -1
+face_up = true
+face_down = false
+game_logic = 0 # interger game_logic_1, game_logic_2,
+game_logic_start = 0 # 0 means zero card is exposed.
+game_logic_1 = 1     # 1 means one card is exposed.
+game_logic_2 = 2     # 2 means two cards are exposed.
+
+card_list = range (0,8)*2 #[0,1,2,3,4,5,6,7]
+card_list_1_index = 0
+card_list_2_index = 0
+
+card_expose = range (0,8)*2
+num_card_list = len(card_list)
+
+# helper function to initialize globals
+def new_game():
+  global card_list, num_card_list, card_expose,game_logic
+  print card_list 
+  random.shuffle(card_list) 
+  print card_list
+  for i in range(0, num_card_list):
+    card_expose[i]=false
+  print card_expose
+  print num_card_list
+  game_logic = game_logic_start # start new game so logic = 0. 
+  
+
+     
+# define event handlers
+def mouseclick(pos):
+    # global false, card_expose
+    # add game state logic here
+    print pos
+    # game logic example for the step 7
+    # https://py2.codeskulptor.org/#examples-memory_states.py
+    i = pos[0]/card_length
+    if game_logic == game_logic_start:
+        card_logic = game_logic_1
+        card_expose_1_index = i # save the first card index/ position
+        if card_expose[i] == false:
+            card_expose[i] = -card_expose[i]
+            print card_expose
+    elif card_logic == game_logic_1: # one card is exposed
+        card_logic = game_logic_2 
+        card_expose_2_index = i
+    else:     
+        if card_list[card_list_1_index] <> card_list[card_list_2_index]:
+            card_expose[card_list_1_index] = false # make card face down
+            card_expose[card_list_2_index] = false # make card face down
+            
+    
+# cards are logically 50x100 pixels in size    
+def draw(canvas):
+    global card_list, face_down, face_up
+    # canvas.draw_text(text, point, font_size, font_color)
+    for i in range(0, num_card_list):
+        # print card_list[i]
+        canvas.draw_text(str(card_list[i]), (card_length*i+20, card_height/2), 20, 'White')
+
+    # canvas.draw_polygon(point_list, line_width, line_color, fill_color = color)
+    # canvas.draw_polygon([(50, 70), (80, 40), (30, 90)], 5, 'Blue', 'White')
+    for i in range(0, num_card_list):
+        if card_expose[i] == face_down:            
+            canvas.draw_polygon([(card_length*i,0),
+                                 (card_length*(i+1),0),
+                                 (card_length*(i+1),card_height),
+                                 (card_length*i, card_height)],
+                                  5,'white','green')
+       
+            
+
+
+# create frame and add a button and labels
+frame = simplegui.create_frame("Memory", card_length*num_card_list, card_height)
+frame.add_button("Reset", new_game)
+label = frame.add_label("Turns = 0")
+
+# register event handlers
+frame.set_mouseclick_handler(mouseclick)
+frame.set_draw_handler(draw)
+
+# get things rolling
+new_game()
+frame.start()
